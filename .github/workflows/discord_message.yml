@@ -30,12 +30,11 @@ jobs:
               lines += "- " + commit.message + " (" + commit.id + ") @" + commit.author.username + "\n"
             }
             return lines
-
-      - name: Discord notification
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        uses: Ilshidur/action-discord@master
-        with:
-          # args: 'Desplegado *\"${{ github.event.commits[0].message }}\"* de **${{ github.actor }}** en  https://autonauta.egodesign.dev/'
-          args: 'Nuevos cambios en https://autonauta.egodesign.dev/\n${{ steps.changelog.outputs.result }}'
+    - name: Discord notification
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      uses: Ilshidur/action-discord@master
+      with:
+        # args: 'Desplegado *\"${{ github.event.commits[0].message }}\"* de **${{ github.actor }}** en  https://autonauta.egodesign.dev/'
+        args: 'Nuevos cambios en https://autonauta.egodesign.dev/\n${{ steps.changelog.outputs.result }}'
 
