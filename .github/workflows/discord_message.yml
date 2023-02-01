@@ -1,8 +1,9 @@
-name: Notify Discord
+name: DEV Deploy
+concurrency: dev-environment-deploy
 
 on:
   push:
-    branches: [master]
+    branches: [ master ]
 
 jobs:
   deploy_and_notify:
@@ -10,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-        with:
+    - uses: actions/checkout@v2
+      with:
           fetch-depth: 0
-      - name: Create Changelog
+    - name: Create Changelog
         id: changelog
         uses: actions/github-script@v6
         env:
@@ -34,4 +35,4 @@ jobs:
         with:
           # args: 'Desplegado *\"${{ github.event.commits[0].message }}\"* de **${{ github.actor }}** en  https://autonauta.egodesign.dev/'
           args: 'Nuevos cambios en https://autonauta.egodesign.dev/\n${{ steps.changelog.outputs.result }}'
-    
+
