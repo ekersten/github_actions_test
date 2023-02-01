@@ -23,9 +23,9 @@ jobs:
         script: |
             const commits = JSON.parse(process.env.COMMITS);
             return commits.map(commit => ({
-              title: commit.message,
+              title: `${commit.message} (de: ${commit.author.name})`,
               url: commit.url,
-
+              color: 2664261
             }))
     - name: Discord notification
       env:
