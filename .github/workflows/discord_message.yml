@@ -25,7 +25,7 @@ jobs:
             return commits.map(commit => ({
               title: commit.message,
               url: commit.url,
-              color: '28a745',
+              color: 2664261,
               author: {
                 name: commit.author.name,
                 url: commit.author.url
