@@ -23,9 +23,9 @@ jobs:
         result-encoding: string
         script: |
             const commits = JSON.parse(process.env.COMMITS);
-            var lines = "## What’s Changed\n\n";
+            var lines = "";
             for (const commit of commits) {
-              lines += "- " + commit.message + " (" + commit.id + ") @" + commit.author.username + "\n"
+              lines += "- " + commit.message + " (" + commit.url + ") @" + commit.author.username + "\n"
             }
             return lines
     - name: Discord notification
@@ -34,5 +34,5 @@ jobs:
       uses: Ilshidur/action-discord@master
       with:
         # args: 'Desplegado *\"${{ github.event.commits[0].message }}\"* de **${{ github.actor }}** en  https://autonauta.egodesign.dev/'
-        args: 'Nuevos cambios en https://autonauta.egodesign.dev/\n${{ steps.changelog.outputs.result }}'
+        args: 'Nuevos cambios en https://autonauta.egodesign.dev/<br>\n\n${{ steps.changelog.outputs.result }}'
 
