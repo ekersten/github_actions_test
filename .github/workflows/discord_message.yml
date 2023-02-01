@@ -15,19 +15,19 @@ jobs:
       with:
           fetch-depth: 0
     - name: Create Changelog
-        id: changelog
-        uses: actions/github-script@v6
-        env:
-          COMMITS: ${{ toJSON(github.event.commits) }}
-        with:
-          result-encoding: string
-          script: |
-              const commits = JSON.parse(process.env.COMMITS);
-              var lines = "## What’s Changed\n\n";
-              for (const commit of commits) {
-                lines += "- " + commit.message + " (" + commit.id + ") @" + commit.author.username + "\n"
-              }
-              return lines
+      id: changelog
+      uses: actions/github-script@v6
+      env:
+        COMMITS: ${{ toJSON(github.event.commits) }}
+      with:
+        result-encoding: string
+        script: |
+            const commits = JSON.parse(process.env.COMMITS);
+            var lines = "## What’s Changed\n\n";
+            for (const commit of commits) {
+              lines += "- " + commit.message + " (" + commit.id + ") @" + commit.author.username + "\n"
+            }
+            return lines
       - name: Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
