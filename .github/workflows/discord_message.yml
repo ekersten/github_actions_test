@@ -20,19 +20,23 @@ jobs:
       env:
         COMMITS: ${{ toJSON(github.event.commits) }}
       with:
-        result-encoding: string
         script: |
             const commits = JSON.parse(process.env.COMMITS);
-            var lines = "";
-            for (const commit of commits) {
-              lines += "- " + commit.message + " (" + commit.url + ") @" + commit.author.username + "\n"
-            }
-            return lines
+            return commits.map(commit => ({
+              title: commit.message,
+              url: commit.url,
+              color: '28a745',
+              author: {
+                name: commit.author.name,
+                url: commit.author.url
+              }
+
+            }))
     - name: Discord notification
       env:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        DISCORD_EMBEDS: ${{ steps.changelog.outputs.result }}
       uses: Ilshidur/action-discord@master
       with:
-        # args: 'Desplegado *\"${{ github.event.commits[0].message }}\"* de **${{ github.actor }}** en  https://autonauta.egodesign.dev/'
-        args: 'Nuevos cambios en https://autonauta.egodesign.dev/<br>\n\n${{ steps.changelog.outputs.result }}'
+        args: 'Nuevos cambios en https://autonauta.egodesign.dev/'
 
