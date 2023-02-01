@@ -1,0 +1,34 @@
+name: Echo release version
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy_and_notify:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create Changelog
+        id: changelog
+        uses: actions/github-script@v6.3.1
+        env:
+          COMMITS: ${{ toJSON(github.event.commits) }}
+        with:
+          result-encoding: string
+          script: |
+              const commits = JSON.parse(process.env.COMMITS);
+              var lines = "## What’s Changed\n\n";
+              for (const commit of commits) {
+                lines += "- " + commit.message + " (" + commit.id + ") @" + commit.author.username + "\n"
+              }
+              return lines
+      - name: Discord notification
+            env:
+              DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+            uses: Ilshidur/action-discord@master
+            with:
+              # args: 'Desplegado *\"${{ github.event.commits[0].message }}\"* de **${{ github.actor }}** en  https://autonauta.egodesign.dev/'
+              args: 'Nuevos cambios en https://autonauta.egodesign.dev/\n${{ steps.changelog.outputs.result }}'
+    
