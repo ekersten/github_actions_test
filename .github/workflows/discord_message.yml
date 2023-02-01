@@ -1,9 +1,7 @@
 name: DEV Deploy
 concurrency: dev-environment-deploy
 
-on:
-  push:
-    branches: [ master ]
+on: push
 
 jobs:
   deploy_and_notify:
