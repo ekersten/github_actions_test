@@ -1,4 +1,4 @@
-name: Echo release version
+name: Notify Discord
 
 on:
   push:
