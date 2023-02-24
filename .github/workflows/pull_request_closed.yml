@@ -1,0 +1,13 @@
+name: Create test environtment for pull request
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+jobs:
+  show-message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo
+        run: echo "pull request closed ${{github.head_ref}}"

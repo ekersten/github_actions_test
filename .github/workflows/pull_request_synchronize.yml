@@ -1,0 +1,13 @@
+name: Create test environtment for pull request
+
+on:
+  pull_request:
+    types: [synchronize]
+    branches: [main]
+
+jobs:
+  show-message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo
+        run: echo "new content on ${{github.head_ref}}"
