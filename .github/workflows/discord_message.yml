@@ -1,7 +1,10 @@
 name: DEV Deploy
 concurrency: dev-environment-deploy
 
-on: push
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   deploy_and_notify:
@@ -33,5 +36,5 @@ jobs:
         DISCORD_EMBEDS: ${{ steps.changelog.outputs.result }}
       uses: Ilshidur/action-discord@master
       with:
-        args: 'Nuevos cambios en https://autonauta.egodesign.dev/'
+        args: 'Nuevos cambios en el repo'
 
