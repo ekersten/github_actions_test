@@ -2,7 +2,7 @@ name: Create test environtment for pull request
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, reopened]
     branches: [main]
 
 jobs:
