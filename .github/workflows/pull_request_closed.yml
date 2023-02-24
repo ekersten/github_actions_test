@@ -1,4 +1,4 @@
-name: Create test environtment for pull request
+name: Delete test environtment for pull request
 
 on:
   pull_request:

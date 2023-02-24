@@ -1,4 +1,4 @@
-name: Create test environtment for pull request
+name: Update test environtment for pull request
 
 on:
   pull_request:
