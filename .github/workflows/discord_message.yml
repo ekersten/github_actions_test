@@ -17,14 +17,25 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Create Changelog
+      id: changelog
+      uses: actions/github-script@v6
+      env:
+        COMMITS: ${{ toJSON(github.event.commits) }}
+      with:
+        result-encoding: string
+        script: |
+          const commits = JSON.parse(process.env.COMMITS);
+          let compiledMessage = "";
+          commits.forEach(commit => {
+            compiledMessage += "📦 **" + commit.message + "** (de: " + commit.author.name + ") - " + commit.url + "\n  ";
+            compiledMessage += "📦 **" + commit.message + "** (de: " + commit.author.name + ") - " + commit.url + "\n  "
+          });
+          return compiledMessage;
     - name: Discord notification
-      run: |
-        # Prepare commit information
-        COMMIT_MESSAGE=$(git log --format="%s (%h) de @%an" -n 1 ${{ github.sha }})
-        COMMIT_LINK=$(git log --format="[%h](${{ github.event.repository.html_url }}/commit/${{ github.sha }})" -n 1 ${{ github.sha }})
-
-        # Send message to Discord
-        curl -X POST -H 'Content-Type: application/json' -d '{
-          "content": "New commit(s) on `develop` branch:\n\n'${COMMIT_MESSAGE}' ('${COMMIT_LINK}')"
-        }' ${{ secrets.DISCORD_WEBHOOK }}
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      uses: Ilshidur/action-discord@master
+      with:
+        args: "Nuevos cambios geniales en el repo: \n${{ steps.changelog.outputs.result }}"
 
