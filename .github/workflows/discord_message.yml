@@ -24,17 +24,17 @@ jobs:
         COMMITS: ${{ toJSON(github.event.commits) }}
       with:
         script: |
-            const commits = JSON.parse(process.env.COMMITS);
-            return commits.map(commit => ({
-              title: `${commit.message} (de: ${commit.author.name})`,
-              url: commit.url,
-              color: 2664261
-            }))
+          const commits = JSON.parse(process.env.COMMITS);
+          const compiledMessage = '';
+          commits.forEach(commit => {
+            compiledMessage += `${commit.message} (de: ${commit.author.name}) {commit.url}\n`;
+          });
+          return compiledMessage;
     - name: Discord notification
       env:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         DISCORD_EMBEDS: ${{ steps.changelog.outputs.result }}
       uses: Ilshidur/action-discord@master
       with:
-        args: 'Nuevos cambios en el repo'
+        args: 'Nuevos cambios: ${{ steps.changelog.outputs.result }}'
 
