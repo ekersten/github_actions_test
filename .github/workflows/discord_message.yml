@@ -35,5 +35,5 @@ jobs:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       uses: Ilshidur/action-discord@master
       with:
-        args: "Nuevos cambios geniales en el repo: \n\n${{ steps.changelog.outputs.result }}"
+        args: "Nuevos cambios geniales en el repo: \n${{ steps.changelog.outputs.result }}"
 
