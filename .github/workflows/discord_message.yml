@@ -27,8 +27,8 @@ jobs:
           const commits = JSON.parse(process.env.COMMITS);
           let compiledMessage = "";
           commits.forEach(commit => {
-            compiledMessage += "📦 **" + commit.message + "** (de: " + commit.author.name + ") - <" + commit.url + ">  ";
-            compiledMessage += "📦 **" + commit.message + "** (de: " + commit.author.name + ") - <" + commit.url + ">  "
+            compiledMessage += "📦 **" + commit.message + "** (de: " + commit.author.name + ") - " + commit.url + "\n  ";
+            compiledMessage += "📦 **" + commit.message + "** (de: " + commit.author.name + ") - " + commit.url + "\n  "
           });
           return compiledMessage;
     - name: Discord notification
