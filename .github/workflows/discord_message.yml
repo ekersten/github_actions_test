@@ -33,7 +33,6 @@ jobs:
     - name: Discord notification
       env:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        DISCORD_EMBEDS: ${{ steps.changelog.outputs.result }}
       uses: Ilshidur/action-discord@master
       with:
         args: 'Nuevos cambios: ${{ steps.changelog.outputs.result }}'
