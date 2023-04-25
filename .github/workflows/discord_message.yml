@@ -27,7 +27,7 @@ jobs:
           const commits = JSON.parse(process.env.COMMITS);
           let compiledMessage = '';
           commits.forEach(commit => {
-            compiledMessage += `${commit.message} (de: ${commit.author.name}) {commit.url}\n`;
+            compiledMessage += `${commit.message} (de: ${commit.author.name}) ${commit.url}\r\n`;
           });
           return compiledMessage;
     - name: Discord notification
@@ -35,5 +35,5 @@ jobs:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       uses: Ilshidur/action-discord@master
       with:
-        args: 'Nuevos cambios: ${{ steps.changelog.outputs.result }}'
+        args: 'Nuevos cambios: \n${{ steps.changelog.outputs.result }}'
 
